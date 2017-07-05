@@ -5,12 +5,20 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class Ragdoll : MonoBehaviour {
 
+    public float DestroyDelay = 5;
     private Animator animator = null;
     protected Rigidbody[] rigidbodies;
 
+
     public bool RagdollOn {
         get { return !animator.enabled; }
-        set { animator.enabled = !value; foreach (Rigidbody r in rigidbodies) r.isKinematic = !value; }
+        set {
+            animator.enabled = !value;
+            foreach (Rigidbody r in rigidbodies)
+                r.isKinematic = !value;
+
+            if (value) Destroy(gameObject, DestroyDelay);
+        }
     }
 
     // Use this for initialization 

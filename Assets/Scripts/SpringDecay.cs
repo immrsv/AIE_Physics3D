@@ -16,11 +16,7 @@ public class SpringDecay : MonoBehaviour {
 	void Start () {
         Hinges = GetComponentsInChildren<HingeJoint>();
 
-        foreach (var hinge in Hinges) {
-            var spr = hinge.spring;
-            spr.spring = MaxStrength;
-            hinge.spring = spr;
-        }
+        ResetSprings();
 	}
 	
 	// Update is called once per frame
@@ -28,6 +24,16 @@ public class SpringDecay : MonoBehaviour {
         foreach (var hinge in Hinges) {
             var spr = hinge.spring;
             spr.spring = Mathf.Max(MinStrength, spr.spring - (DecayRate * Time.fixedDeltaTime));
+            hinge.spring = spr;
+        }
+    }
+
+    public void ResetSprings()
+    {
+        foreach (var hinge in Hinges)
+        {
+            var spr = hinge.spring;
+            spr.spring = MaxStrength;
             hinge.spring = spr;
         }
     }
